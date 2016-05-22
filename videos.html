@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<div ng-controller="VideosController" layout-fill="" >
+
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="$nav.popPage('home.html')">
+                <ons-icon icon="ion-android-arrow-back" style="font-size: 32px; width: 1em;"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">Videos</div>
+        <div class="right">
+            <md-button aria-label="Search" ng-click="showSearch = !showSearch">
+                <ng-md-icon icon="search"></ng-md-icon>
+            </md-button>
+        </div>
+    </ons-toolbar>
+
+    <md-content style="height: 100%;" md-theme="altTheme" >
+        <form ng-submit="$event.preventDefault()" class="md-padding">
+            <p>Select date from <code>date picker</code> to search for videos.</p>
+                <md-datepicker flex="" ng-model="date" md-max-length="50%" md-placeholder="Enter date" required></md-datepicker>
+
+
+        </form>
+            <section ng-repeat="(kind,val) in videos">
+                <md-subheader class="md-primary">{{kind}}</md-subheader>
+                <md-list layout="column" ng-repeat="(tournament,value) in val">
+                    <ons-list-header>{{tournament}}</ons-list-header>
+                    <md-list-item layout-padding=""  class="md-3-line" ng-repeat="video in value">
+                        <ons-col width="8.5%" class="center">
+                            <h8>{{video.time}}</h8>
+                        </ons-col>
+                        <ons-col width="8.5%">
+                            <img ng-src="{{video.logoTeam1}}" class="md-avatar">
+                        </ons-col>
+                        <ons-col width="36%" class="center">
+                            <h5 style="margin-top: 10px;">{{video.matches}}</h5>
+                        </ons-col>
+                        <ons-col width="8.5%">
+                            <img ng-src="{{video.logoTeam2}}" class="md-avatar">
+                        </ons-col>
+                        <ons-col width="8.5%" class="center">
+                            <a ng-show="{{video.highlightLink != null && video.highlightLink != ''}}" href="#inline" ng-click="goToHighlight(video.highlightLink)">Highlight</a>
+                        </ons-col>
+                        <ons-col width="15%" class="center">
+                            <a ng-show="{{video.longHighlightLink != null && video.longHighlightLink != ''}}" href="#inline" ng-click="goToHighlight(video.longHighlightLink)">Long Highlight</a>
+                        </ons-col>
+                        <ons-col width="15%" class="center">
+                            <a ng-show="{{video.fullmatchLink != null && video.fullmatchLink != ''}}" href="#inline" ng-click="goToHighlight(video.fullmatchLink)">Full match highlight</a>
+                        </ons-col>
+                        <md-divider ng-if="!$last"></md-divider>
+                    </md-list-item>
+                </md-list>
+
+            </section>
+    </md-content>
+</div>
